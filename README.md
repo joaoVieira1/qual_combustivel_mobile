@@ -1,4 +1,4 @@
-# PROJETO DE CONVERSÃO DE TEMPERATURAS
+# QUAL COMBUSTÍVEL É MAIS RENTÁVEL?
 
 ## Descrição do projeto
 O projeto apresenta um aplicativo mobile que pede como entrada dois valores, um valor é referente a gasolina
