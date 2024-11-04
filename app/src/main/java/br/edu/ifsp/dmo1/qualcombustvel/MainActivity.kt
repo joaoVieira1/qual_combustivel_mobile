@@ -3,61 +3,50 @@ package br.edu.ifsp.dmo1.qualcombustvel
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import br.edu.ifsp.dmo1.qualcombustvel.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
-    private lateinit var gasolineEditText: EditText
-    private lateinit var ethanolEditText: EditText
-    private lateinit var mButton: Button
-    private lateinit var mTextView: TextView
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findById()
         setClick()
     }
 
-    private fun findById(){
-        gasolineEditText = findViewById(R.id.edittext_gasoline)
-        ethanolEditText = findViewById(R.id.edittext_ethanol)
-        mButton = findViewById(R.id.button_calculate)
-        mTextView = findViewById(R.id.textview_response)
-    }
-
     private fun setClick(){
-        mButton.setOnClickListener(this)
+        binding.buttonCalculate.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
-        if(view == mButton){
+        if(view == binding.buttonCalculate){
             calculate()
         }
     }
 
     private fun calculate(){
-        if(gasolineEditText.text.isEmpty() || ethanolEditText.text.isEmpty()){
+        if(binding.edittextGasoline.text.isEmpty() || binding.edittextEthanol.text.isEmpty()){
             Toast.makeText(this, getString(R.string.input_error), Toast.LENGTH_SHORT).show()
-            mTextView.text = ""
+            binding.textviewResponse.text = ""
         }else{
-            val gasoline = retriveValue(gasolineEditText)
-            val ethanol = retriveValue(ethanolEditText)
+            val gasoline = retriveValue(binding.edittextGasoline)
+            val ethanol = retriveValue(binding.edittextEthanol)
 
             val result = ethanol / gasoline
 
             if(result < 0.7){
-                mTextView.text = getString(R.string.answer_ethanol)
-                mTextView.setTextColor(resources.getColor(R.color.ethanol, this.theme))
+                binding.textviewResponse.text = getString(R.string.answer_ethanol)
+                binding.textviewResponse.setTextColor(resources.getColor(R.color.ethanol, this.theme))
             }else{
-                mTextView.text = getString(R.string.answer_gasoline)
-                mTextView.setTextColor(resources.getColor(R.color.gasoline, this.theme))
+                binding.textviewResponse.text = getString(R.string.answer_gasoline)
+                binding.textviewResponse.setTextColor(resources.getColor(R.color.gasoline, this.theme))
             }
         }
     }
